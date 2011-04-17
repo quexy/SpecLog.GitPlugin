@@ -1,0 +1,69 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecLog.GitPlugin.Client", "SpecLog.GitPlugin.Client\SpecLog.GitPlugin.Client.csproj", "{E0184258-0647-40E2-AC22-F7C57A5BCB51}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpecLog.GitPlugin.Server", "SpecLog.GitPlugin.Server\SpecLog.GitPlugin.Server.csproj", "{9CB923C5-3DD0-44B4-AF68-CFB9FF50D6F3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "External", "External", "{EC7F7984-2BDE-48A8-B401-4B9B5D976041}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "GitSharp", "GitSharp", "{485FA046-F423-4CDC-8AE3-AAE45CA6923A}"
+	ProjectSection(SolutionItems) = preProject
+		External\GitSharp\GitSharp.Core.dll = External\GitSharp\GitSharp.Core.dll
+		External\GitSharp\GitSharp.Core.pdb = External\GitSharp\GitSharp.Core.pdb
+		External\GitSharp\GitSharp.Core.xml = External\GitSharp\GitSharp.Core.xml
+		External\GitSharp\GitSharp.dll = External\GitSharp\GitSharp.dll
+		External\GitSharp\GitSharp.pdb = External\GitSharp\GitSharp.pdb
+		External\GitSharp\GitSharp.xml = External\GitSharp\GitSharp.xml
+		External\GitSharp\ICSharpCode.SharpZipLib.dll = External\GitSharp\ICSharpCode.SharpZipLib.dll
+		External\GitSharp\Tamir.SharpSSH.dll = External\GitSharp\Tamir.SharpSSH.dll
+		External\GitSharp\Winterdom.IO.FileMap.dll = External\GitSharp\Winterdom.IO.FileMap.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SpecLog", "SpecLog", "{A1318594-AC67-4896-839F-E40C71F64C67}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{AD0B7A86-0388-446F-91E2-A51BC0462D9D}"
+	ProjectSection(SolutionItems) = preProject
+		External\SpecLog\Server\Microsoft.Practices.Unity.dll = External\SpecLog\Server\Microsoft.Practices.Unity.dll
+		External\SpecLog\Server\TechTalk.SpecLog.CommandBuilding.dll = External\SpecLog\Server\TechTalk.SpecLog.CommandBuilding.dll
+		External\SpecLog\Server\TechTalk.SpecLog.Commands.dll = External\SpecLog\Server\TechTalk.SpecLog.Commands.dll
+		External\SpecLog\Server\TechTalk.SpecLog.Common.dll = External\SpecLog\Server\TechTalk.SpecLog.Common.dll
+		External\SpecLog\Server\TechTalk.SpecLog.DataAccess.dll = External\SpecLog\Server\TechTalk.SpecLog.DataAccess.dll
+		External\SpecLog\Server\TechTalk.SpecLog.Entities.dll = External\SpecLog\Server\TechTalk.SpecLog.Entities.dll
+		External\SpecLog\Server\TechTalk.SpecLog.GherkinSynchronization.dll = External\SpecLog\Server\TechTalk.SpecLog.GherkinSynchronization.dll
+		External\SpecLog\Server\TechTalk.SpecLog.Logging.dll = External\SpecLog\Server\TechTalk.SpecLog.Logging.dll
+		External\SpecLog\Server\TechTalk.SpecLog.Server.Services.dll = External\SpecLog\Server\TechTalk.SpecLog.Server.Services.dll
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{59264C30-457B-4041-9297-8E790D1CC927}"
+	ProjectSection(SolutionItems) = preProject
+		External\SpecLog\Client\TechTalk.SpecLog.Application.Common.dll = External\SpecLog\Client\TechTalk.SpecLog.Application.Common.dll
+		External\SpecLog\Client\TechTalk.SpecLog.Common.dll = External\SpecLog\Client\TechTalk.SpecLog.Common.dll
+		External\SpecLog\Client\TechTalk.SpecLog.Entities.dll = External\SpecLog\Client\TechTalk.SpecLog.Entities.dll
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E0184258-0647-40E2-AC22-F7C57A5BCB51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0184258-0647-40E2-AC22-F7C57A5BCB51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0184258-0647-40E2-AC22-F7C57A5BCB51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0184258-0647-40E2-AC22-F7C57A5BCB51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CB923C5-3DD0-44B4-AF68-CFB9FF50D6F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CB923C5-3DD0-44B4-AF68-CFB9FF50D6F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CB923C5-3DD0-44B4-AF68-CFB9FF50D6F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CB923C5-3DD0-44B4-AF68-CFB9FF50D6F3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{485FA046-F423-4CDC-8AE3-AAE45CA6923A} = {EC7F7984-2BDE-48A8-B401-4B9B5D976041}
+		{A1318594-AC67-4896-839F-E40C71F64C67} = {EC7F7984-2BDE-48A8-B401-4B9B5D976041}
+		{AD0B7A86-0388-446F-91E2-A51BC0462D9D} = {A1318594-AC67-4896-839F-E40C71F64C67}
+		{59264C30-457B-4041-9297-8E790D1CC927} = {A1318594-AC67-4896-839F-E40C71F64C67}
+	EndGlobalSection
+EndGlobal
