@@ -37,7 +37,8 @@ namespace SpecLog.GitPlugin.Server
                 gherkinFileRepository,
                 commandBuilderFactory,
                 boundaryFactory,
-                boundary
+                boundary,
+                logger
             );
         }
     }
