@@ -25,21 +25,33 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{AD0B7A86-0388-446F-91E2-A51BC0462D9D}"
 	ProjectSection(SolutionItems) = preProject
 		External\SpecLog\Server\Microsoft.Practices.Unity.dll = External\SpecLog\Server\Microsoft.Practices.Unity.dll
+		External\SpecLog\Server\TechTalk.Genome.dll = External\SpecLog\Server\TechTalk.Genome.dll
 		External\SpecLog\Server\TechTalk.SpecLog.CommandBuilding.dll = External\SpecLog\Server\TechTalk.SpecLog.CommandBuilding.dll
+		External\SpecLog\Server\TechTalk.SpecLog.CommandBuilding.pdb = External\SpecLog\Server\TechTalk.SpecLog.CommandBuilding.pdb
 		External\SpecLog\Server\TechTalk.SpecLog.Commands.dll = External\SpecLog\Server\TechTalk.SpecLog.Commands.dll
+		External\SpecLog\Server\TechTalk.SpecLog.Commands.pdb = External\SpecLog\Server\TechTalk.SpecLog.Commands.pdb
 		External\SpecLog\Server\TechTalk.SpecLog.Common.dll = External\SpecLog\Server\TechTalk.SpecLog.Common.dll
+		External\SpecLog\Server\TechTalk.SpecLog.Common.pdb = External\SpecLog\Server\TechTalk.SpecLog.Common.pdb
 		External\SpecLog\Server\TechTalk.SpecLog.DataAccess.dll = External\SpecLog\Server\TechTalk.SpecLog.DataAccess.dll
+		External\SpecLog\Server\TechTalk.SpecLog.DataAccess.pdb = External\SpecLog\Server\TechTalk.SpecLog.DataAccess.pdb
 		External\SpecLog\Server\TechTalk.SpecLog.Entities.dll = External\SpecLog\Server\TechTalk.SpecLog.Entities.dll
+		External\SpecLog\Server\TechTalk.SpecLog.Entities.pdb = External\SpecLog\Server\TechTalk.SpecLog.Entities.pdb
 		External\SpecLog\Server\TechTalk.SpecLog.GherkinSynchronization.dll = External\SpecLog\Server\TechTalk.SpecLog.GherkinSynchronization.dll
+		External\SpecLog\Server\TechTalk.SpecLog.GherkinSynchronization.pdb = External\SpecLog\Server\TechTalk.SpecLog.GherkinSynchronization.pdb
 		External\SpecLog\Server\TechTalk.SpecLog.Logging.dll = External\SpecLog\Server\TechTalk.SpecLog.Logging.dll
+		External\SpecLog\Server\TechTalk.SpecLog.Logging.pdb = External\SpecLog\Server\TechTalk.SpecLog.Logging.pdb
 		External\SpecLog\Server\TechTalk.SpecLog.Server.Services.dll = External\SpecLog\Server\TechTalk.SpecLog.Server.Services.dll
+		External\SpecLog\Server\TechTalk.SpecLog.Server.Services.pdb = External\SpecLog\Server\TechTalk.SpecLog.Server.Services.pdb
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{59264C30-457B-4041-9297-8E790D1CC927}"
 	ProjectSection(SolutionItems) = preProject
 		External\SpecLog\Client\TechTalk.SpecLog.Application.Common.dll = External\SpecLog\Client\TechTalk.SpecLog.Application.Common.dll
+		External\SpecLog\Client\TechTalk.SpecLog.Application.Common.pdb = External\SpecLog\Client\TechTalk.SpecLog.Application.Common.pdb
 		External\SpecLog\Client\TechTalk.SpecLog.Common.dll = External\SpecLog\Client\TechTalk.SpecLog.Common.dll
+		External\SpecLog\Client\TechTalk.SpecLog.Common.pdb = External\SpecLog\Client\TechTalk.SpecLog.Common.pdb
 		External\SpecLog\Client\TechTalk.SpecLog.Entities.dll = External\SpecLog\Client\TechTalk.SpecLog.Entities.dll
+		External\SpecLog\Client\TechTalk.SpecLog.Entities.pdb = External\SpecLog\Client\TechTalk.SpecLog.Entities.pdb
 	EndProjectSection
 EndProject
 Global
