@@ -13371,6 +13371,20 @@
             <param name="key">Key to search for</param>
             <returns>default(V) or item if Key is found</returns>
         </member>
+        <member name="M:GitSharp.Core.Extensions.IsDirectory(System.IO.FileSystemInfo)">
+            <summary>
+            Checks if a directory exists with the FullName of the FileSystemInfo.
+            </summary>
+            <param name="fileSystemInfo">The FileSystemInfo wich needs to be checked.</param>
+            <returns>True if a directry exists with the FullName of the FileSystemInfo, false otherwise</returns>
+        </member>
+        <member name="M:GitSharp.Core.Extensions.IsFile(System.IO.FileSystemInfo)">
+            <summary>
+            Checks if a file exists with the FullName of the FileSystemInfo.
+            </summary>
+            <param name="fileSystemInfo">The FileSystemInfo wich needs to be checked.</param>
+            <returns>True if a file exists with the FullName of the FileSystemInfo, false otherwise</returns>
+        </member>
         <member name="M:GitSharp.Core.Extensions.lastModified(System.IO.FileInfo)">
             <summary>
             Returns the time that the file denoted by this abstract pathname was last modified.
