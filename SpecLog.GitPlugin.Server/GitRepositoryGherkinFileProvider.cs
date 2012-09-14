@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using GitSharp;
-using TechTalk.SpecLog.GherkinSynchronization;
-using TechTalk.SpecLog.Logging;
 using GitSharp.Commands;
 using GitSharp.Core.Exceptions;
+using TechTalk.SpecLog.GherkinSynchronization;
+using TechTalk.SpecLog.Logging;
 
 namespace SpecLog.GitPlugin.Server
 {

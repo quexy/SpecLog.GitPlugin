@@ -40,19 +40,19 @@ namespace SpecLog.GitPlugin.Client
         public string RemotePath
         {
             get { return config.RemoteRepository; }
-            set { config.RemoteRepository = value; SaveCommand.RaiseCanExecuteChanged(); }
+            set { config.RemoteRepository = Trim(value); SaveCommand.RaiseCanExecuteChanged(); }
         }
 
         public string LocalPath
         {
             get { return config.LocalRepository; }
-            set { config.LocalRepository = value; SaveCommand.RaiseCanExecuteChanged(); }
+            set { config.LocalRepository = Trim(value); SaveCommand.RaiseCanExecuteChanged(); }
         }
 
         public string Branch
         {
             get { return config.Branch; }
-            set { config.Branch = value; SaveCommand.RaiseCanExecuteChanged(); }
+            set { config.Branch = Trim(value); SaveCommand.RaiseCanExecuteChanged(); }
         }
 
         public int UpdateIntervalMinutes
@@ -109,6 +109,11 @@ namespace SpecLog.GitPlugin.Client
                 serializer.Serialize(stream, config);
                 return Encoding.UTF8.GetString(stream.ToArray());
             }
+        }
+
+        private static string Trim(string value)
+        {
+            return (value ?? string.Empty).Trim();
         }
     }
 }

@@ -11,7 +11,7 @@ using TechTalk.SpecLog.Server.Services.PluginInfrastructure;
 
 namespace SpecLog.GitPlugin.Server
 {
-    [Plugin(PluginName, ContainerSetupType=typeof(GitPluginContainerSetup))]
+    [Plugin(PluginName, ContainerSetupType = typeof(GitPluginContainerSetup))]
     public class GitPlugin : ServerPlugin
     {
         public const string PluginName = "GitPlugin";
