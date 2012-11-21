@@ -18,4 +18,9 @@ namespace SpecLog.GitPlugin.Server
             get { return TimeSpan.FromMinutes(UpdateIntervalMinutes); }
         }
     }
+
+    public static class PluginCommands
+    {
+        public const string SynchronizeGherkinFilesVerb = "SynchronizeGherkinFiles";
+    }
 }

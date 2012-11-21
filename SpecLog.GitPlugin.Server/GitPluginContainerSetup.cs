@@ -3,7 +3,6 @@ using TechTalk.SpecLog.CommandBuilding;
 using TechTalk.SpecLog.Common;
 using TechTalk.SpecLog.Common.Commands;
 using TechTalk.SpecLog.DataAccess.Repositories;
-using TechTalk.SpecLog.GherkinSynchronization;
 
 namespace SpecLog.GitPlugin.Server
 {

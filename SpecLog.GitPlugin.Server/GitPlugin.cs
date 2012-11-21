@@ -1,12 +1,8 @@
-﻿using System;
-using System.Diagnostics;
-using TechTalk.Genome;
+﻿using System.Diagnostics;
 using TechTalk.SpecLog.Commands;
 using TechTalk.SpecLog.Common;
 using TechTalk.SpecLog.Common.Commands;
-using TechTalk.SpecLog.DataAccess.Boundaries;
 using TechTalk.SpecLog.Entities;
-using TechTalk.SpecLog.GherkinSynchronization;
 using TechTalk.SpecLog.Server.Services.PluginInfrastructure;
 
 namespace SpecLog.GitPlugin.Server
@@ -14,30 +10,47 @@ namespace SpecLog.GitPlugin.Server
     [Plugin(PluginName, ContainerSetupType = typeof(GitPluginContainerSetup))]
     public class GitPlugin : ServerPlugin
     {
-        public const string PluginName = "GitPlugin";
+        public const string PluginName = "SpecLog.GitPlugin";
+        public const string GitGherkinFileProviderType = PluginName;
 
-        private readonly IGherkinFileGitPollingSynchronizerFactory gherkinFileGitPollingSynchronizerFactory;
-        private readonly IEntityRepository entityRepository;
-        public GitPlugin(IGherkinFileGitPollingSynchronizerFactory gherkinFileGitPollingSynchronizerFactory, IEntityRepository entityRepository)
+        public GitGherkinLinkProvider GitGherkinLinkProvider { get; private set; }
+
+        public override IGherkinLinkProvider GherkinLinkProvider
         {
-            this.gherkinFileGitPollingSynchronizerFactory = gherkinFileGitPollingSynchronizerFactory;
-            this.entityRepository = entityRepository;
+            get { return GitGherkinLinkProvider; }
         }
 
-        private IGherkinFileSynchronizer gherkinFileSynchronizer;
+        public GitPlugin(IGherkinFileGitPollingSynchronizerFactory gherkinFileGitPollingSynchronizerFactory, IEntityRepository entityRepository)
+        {
+            GitGherkinLinkProvider = new GitGherkinLinkProvider(entityRepository, gherkinFileGitPollingSynchronizerFactory, this);
+        }
+
         public override void OnStart()
         {
             var config = GetConfiguration<GitPluginConfiguration>();
-            gherkinFileSynchronizer = gherkinFileGitPollingSynchronizerFactory.CreateSynchronizer(config, config);
-            gherkinFileSynchronizer.Start();
+            GitGherkinLinkProvider.Start(config);
             Log(TraceEventType.Information, "The plugin '{0}' started successfully.", PluginName);
         }
 
         public override void OnStop()
         {
-            gherkinFileSynchronizer.Stop();
-            gherkinFileSynchronizer = null;
+            GitGherkinLinkProvider.Stop();
             Log(TraceEventType.Information, "The plugin '{0}' stopped successfully.", PluginName);
+        }
+
+        public override void PerformCommand(string commandVerb)
+        {
+            base.PerformCommand(commandVerb);
+
+            switch (commandVerb)
+            {
+                case PluginCommands.SynchronizeGherkinFilesVerb:
+                    GitGherkinLinkProvider.GherkinFilePoller.TriggerUpdate();
+                    break;
+                default:
+                    Log(TraceEventType.Warning, "The command '{0}' is not spported");
+                    break;
+            }
         }
 
         public override void BeforeApplyCommand(RepositoryInfo repository, Command command) { /* SKIP */ }
@@ -46,18 +59,7 @@ namespace SpecLog.GitPlugin.Server
         {
             if (command.CommandName == CommandName.CreateGherkinLink)
             {
-                var args = (AppendToCollectionCommandArgs)command.CommandArgs;
-                var gherkinFile = (GherkinFile)entityRepository.Load(repository, args.CollectionMember);
-
-                var updateBoundary = new Boundary(Context.Current);
-                try
-                {
-                    gherkinFileSynchronizer.TriggerUpdate(gherkinFile, updateBoundary);
-                }
-                catch (Exception ex)
-                {
-                    Log(TraceEventType.Error, "An exception has occurred during updating a gherkin file link: {0}", ex);
-                }
+                GitGherkinLinkProvider.CreateGherkinLink(repository, command);
             }
         }
 

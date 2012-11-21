@@ -16,4 +16,9 @@ namespace SpecLog.GitPlugin.Client
         public string Branch { get; set; }
         public int UpdateIntervalMinutes { get; set; }
     }
+
+    public static class PluginCommands
+    {
+        public const string SynchronizeGherkinFilesVerb = "SynchronizeGherkinFiles";
+    }
 }

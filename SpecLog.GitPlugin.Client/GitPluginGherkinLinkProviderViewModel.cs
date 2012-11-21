@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.ComponentModel;
 using TechTalk.SpecLog.Application.Common.PluginsInfrastructure;
-using System.ComponentModel;
 
 namespace SpecLog.GitPlugin.Client
 {
@@ -38,7 +34,7 @@ namespace SpecLog.GitPlugin.Client
 
         public string ProviderType
         {
-            get { return "GitGherkinProvider"; }
+            get { return GitPlugin.GitGherkinFileProviderType; }
         }
 
         public event PropertyChangedEventHandler PropertyChanged = delegate { };

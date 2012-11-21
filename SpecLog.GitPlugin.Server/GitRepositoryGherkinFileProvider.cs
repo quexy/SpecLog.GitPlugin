@@ -24,7 +24,7 @@ namespace SpecLog.GitPlugin.Server
 
         public string ProviderType
         {
-            get { return "GitGherkinProvider"; }
+            get { return GitPlugin.GitGherkinFileProviderType; }
         }
 
         public bool FileExists(string filePath)

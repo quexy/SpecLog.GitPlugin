@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml.Serialization;
-using TechTalk.SpecLog.Application.Common;
 using TechTalk.SpecLog.Application.Common.Dialogs;
 using TechTalk.SpecLog.Application.Common.PluginsInfrastructure;
+using TechTalk.SpecLog.Common;
 
 namespace SpecLog.GitPlugin.Client
 {

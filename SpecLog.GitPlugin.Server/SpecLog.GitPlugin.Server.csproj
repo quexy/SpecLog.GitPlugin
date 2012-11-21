@@ -77,6 +77,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GherkinFileGitPollingSynchronizerFactory.cs" />
+    <Compile Include="GitGherkinLinkProvider.cs" />
     <Compile Include="GitPlugin.cs" />
     <Compile Include="GitPluginConfiguration.cs" />
     <Compile Include="GitPluginContainerSetup.cs" />
