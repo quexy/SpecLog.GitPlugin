@@ -1,5 +1,0 @@
-SpecLog is Copyright (c) 2010-2012 of TechTalk Software Support Handelsgesellschaft m.b.H., all rights reserved
-
-Genome is Copyright (c) 2003-2012 of TechTalk Software Support Handelsgesellschaft m.b.H., all rights reserved
-
-Microsoft.Practices.Unity is Copyright (c) of Microsoft Corporation under the Microsoft Public License

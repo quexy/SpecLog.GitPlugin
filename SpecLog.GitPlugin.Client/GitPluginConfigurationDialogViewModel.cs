@@ -6,114 +6,100 @@ using System.Xml.Serialization;
 using TechTalk.SpecLog.Application.Common.Dialogs;
 using TechTalk.SpecLog.Application.Common.PluginsInfrastructure;
 using TechTalk.SpecLog.Common;
+using System.ComponentModel;
+using System.Windows;
 
 namespace SpecLog.GitPlugin.Client
 {
-    public class GitPluginConfigurationDialogViewModel : IDialogViewModel
+    public class GitPluginConfigurationDialogViewModel : PluginConfigurationDialogViewModel<GitPluginConfiguration>, INotifyPropertyChanged
     {
-        public readonly GitPluginConfiguration config;
-        public readonly Dictionary<string, string> sensitiveConfig = new Dictionary<string, string>();
-        public GitPluginConfigurationDialogViewModel(string config, bool enabled)
+        public readonly IDialogService dialogService;
+        public GitPluginConfigurationDialogViewModel(IDialogService dialogService, string config, bool enabled)
+            : base(config, enabled)
         {
-            this.config = Deserialize(config);
-            isEnabled = enabled;
-
-            CloseCommand = new DelegateCommand(Cancel);
-            SaveCommand = new DelegateCommand(Save, CanSave);
+            this.dialogService = dialogService;
+            ClearUserCommand = new DelegateCommand(ClearUser);
+            ChangeUserCommand = new DelegateCommand(ChangeUser);
         }
 
-        public DelegateCommand CloseCommand { get; private set; }
-        public DelegateCommand SaveCommand { get; private set; }
-
-        public string Caption
+        public override string Caption
         {
             get { return "Git plugin configuration"; }
         }
 
-        private bool isEnabled;
-        public bool IsEnabled
-        {
-            get { return isEnabled; }
-            set { isEnabled = value; SaveCommand.RaiseCanExecuteChanged(); }
-        }
-
         public string RemotePath
         {
-            get { return config.RemoteRepository; }
-            set { config.RemoteRepository = Trim(value); SaveCommand.RaiseCanExecuteChanged(); }
+            get { return configuration.RemoteRepository; }
+            set { configuration.RemoteRepository = Trim(value); SaveCommand.RaiseCanExecuteChanged(); }
         }
 
         public string LocalPath
         {
-            get { return config.LocalRepository; }
-            set { config.LocalRepository = Trim(value); SaveCommand.RaiseCanExecuteChanged(); }
+            get { return configuration.LocalRepository; }
+            set { configuration.LocalRepository = Trim(value); SaveCommand.RaiseCanExecuteChanged(); }
         }
 
         public string Branch
         {
-            get { return config.Branch; }
-            set { config.Branch = Trim(value); SaveCommand.RaiseCanExecuteChanged(); }
+            get { return configuration.Branch; }
+            set { configuration.Branch = Trim(value); SaveCommand.RaiseCanExecuteChanged(); }
         }
 
         public int UpdateIntervalMinutes
         {
-            get { return config.UpdateIntervalMinutes; }
-            set { config.UpdateIntervalMinutes = value; SaveCommand.RaiseCanExecuteChanged(); }
+            get { return configuration.UpdateIntervalMinutes; }
+            set { configuration.UpdateIntervalMinutes = value; SaveCommand.RaiseCanExecuteChanged(); }
         }
 
-        public event EventHandler<EventArgs<bool?>> Close = delegate { };
-
-        public void Cancel()
+        public string ConfiguredUser
         {
-            Close(this, new EventArgs<bool?>(false));
+            get { return configuration.Username; }
+            set { configuration.Username = Trim(value); SaveCommand.RaiseCanExecuteChanged(); }
         }
 
-        public bool CanSave()
+        public string DisplayedUser
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(configuration.Username))
+                    return "no user";
+                else return ConfiguredUser;
+            }
+        }
+
+        public DelegateCommand ClearUserCommand { get; private set; }
+        public void ClearUser()
+        {
+            ConfiguredUser = null;
+            sensitiveConfig.Remove(GitPluginConfiguration.PasswordKey);
+            NotifyPropertyChanged("DisplayedUser");
+            NotifyPropertyChanged("ClearVisibility");
+        }
+
+        public Visibility ClearVisibility
+        {
+            get { return string.IsNullOrWhiteSpace(ConfiguredUser) ? Visibility.Collapsed : Visibility.Visible; }
+        }
+
+        public DelegateCommand ChangeUserCommand { get; private set; }
+        public void ChangeUser()
+        {
+            var result = dialogService.ShowDialog(new ChangeUserDialogViewModel(ConfiguredUser)) as ChangeUserDialogResult;
+            if (result != null)
+            {
+                ConfiguredUser = result.UserName;
+                sensitiveConfig[GitPluginConfiguration.PasswordKey] = result.Password;
+                NotifyPropertyChanged("DisplayedUser");
+                NotifyPropertyChanged("ClearVisibility");
+            }
+        }
+
+        public override bool CanSave()
         {
             return !IsEnabled
                 || (!string.IsNullOrWhiteSpace(RemotePath)
                 && !string.IsNullOrWhiteSpace(LocalPath)
                 && UpdateIntervalMinutes > 0);
-        }
-
-        public void Save()
-        {
-            Close(this, new EventArgs<bool?>(true));
-        }
-
-        public IDialogResult GetDialogResultData()
-        {
-            return new PluginConfigurationDialogResult(Serialize(config), sensitiveConfig, IsEnabled);
-        }
-
-        private GitPluginConfiguration Deserialize(string config)
-        {
-            if (string.IsNullOrWhiteSpace(config))
-                return new GitPluginConfiguration();
-
-            var serializer = new XmlSerializer(typeof(GitPluginConfiguration));
-            using (var reader = new StringReader(config))
-            {
-                return (GitPluginConfiguration)serializer.Deserialize(reader);
-            }
-        }
-
-        private string Serialize(GitPluginConfiguration config)
-        {
-            if (config == null)
-                return string.Empty;
-
-            var serializer = new XmlSerializer(typeof(GitPluginConfiguration));
-            using (var stream = new MemoryStream())
-            {
-                serializer.Serialize(stream, config);
-                return Encoding.UTF8.GetString(stream.ToArray());
-            }
-        }
-
-        private static string Trim(string value)
-        {
-            return (value ?? string.Empty).Trim();
         }
     }
 }

@@ -13,6 +13,12 @@ namespace SpecLog.GitPlugin.Client
         public const string PluginName = "SpecLog.GitPlugin";
         public const string GitGherkinFileProviderType = PluginName;
 
+        private readonly IDialogService dialogService;
+        public GitPlugin(IDialogService dialogService)
+        {
+            this.dialogService = dialogService;
+        }
+
         public string Name
         {
             get { return PluginName; }
@@ -27,7 +33,7 @@ namespace SpecLog.GitPlugin.Client
         public IDialogViewModel GetConfigDialog(RepositoryMode repositoryMode, bool isEnabled, string config)
         {
             isEnabledBeforeConfig = isEnabled;
-            return new GitPluginConfigurationDialogViewModel(config, isEnabled);
+            return new GitPluginConfigurationDialogViewModel(dialogService, config, isEnabled);
         }
 
         public bool IsGherkinLinkProvider(RepositoryMode repositoryMode) { return repositoryMode == RepositoryMode.ClientServer; }

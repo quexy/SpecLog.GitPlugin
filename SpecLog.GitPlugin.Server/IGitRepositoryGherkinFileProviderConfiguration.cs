@@ -7,6 +7,10 @@ namespace SpecLog.GitPlugin.Server
         string RemoteRepository { get; }
         string LocalRepository { get; }
         string Branch { get; }
+
         TimeSpan UpdateInterval { get; }
+
+        string Username { get; }
+        string Password { get; }
     }
 }

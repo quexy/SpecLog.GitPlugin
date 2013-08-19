@@ -30,13 +30,20 @@ namespace SpecLog.GitPlugin.Server
         public override void OnStart()
         {
             var config = GetConfiguration<GitPluginConfiguration>();
+
+            var secureConfig = this.GetSecuredConfiguration();
+            if (secureConfig != null && secureConfig.ContainsKey(GitPluginConfiguration.PasswordKey))
+                config.Password = secureConfig[GitPluginConfiguration.PasswordKey];
+
             GitGherkinLinkProvider.Start(config);
+
             Log(TraceEventType.Information, "The plugin '{0}' started successfully.", PluginName);
         }
 
         public override void OnStop()
         {
             GitGherkinLinkProvider.Stop();
+            
             Log(TraceEventType.Information, "The plugin '{0}' stopped successfully.", PluginName);
         }
 

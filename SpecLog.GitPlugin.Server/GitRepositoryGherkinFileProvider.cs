@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using GitSharp;
-using GitSharp.Commands;
-using GitSharp.Core.Exceptions;
 using TechTalk.SpecLog.GherkinSynchronization;
 using TechTalk.SpecLog.Logging;
+using LibGit2Sharp;
+using TechTalk.SpecLog.Common.Utilities;
 
 namespace SpecLog.GitPlugin.Server
 {
@@ -61,19 +60,15 @@ namespace SpecLog.GitPlugin.Server
             }
             catch
             {
-                logger.Log(TraceEventType.Verbose, "Cloning repo {0} to {1}", configuration.RemoteRepository, configuration.LocalRepository);
-                var cloneCmd = new CloneCommand
-                {
-                    Quiet = true,
-                    Bare = false,
-                    Source = configuration.RemoteRepository,
-                    Directory = configuration.LocalRepository,
-                    Branch = configuration.Branch,
-                    OutputStream = new StreamWriter(new NullStream())
-                };
-                cloneCmd.Execute();
-                return cloneCmd.Repository;
+                var path = Repository.Clone(configuration.RemoteRepository, configuration.LocalRepository, checkout: false, credentials: GetCredentials());
+                return new Repository(path);
             }
+        }
+
+        private Credentials GetCredentials()
+        {
+            if (string.IsNullOrEmpty(configuration.Username)) return null;
+            return new Credentials { Username = configuration.Username, Password = configuration.Password };
         }
 
         private Timeout timeout;
@@ -89,53 +84,20 @@ namespace SpecLog.GitPlugin.Server
                 {
                     logger.Log(TraceEventType.Verbose, "Updating repo {0} from {1}",
                         configuration.LocalRepository, configuration.RemoteRepository);
-                    var fetchCmd = new FetchCommand
-                    {
-                        Remote = configuration.RemoteRepository,
-                        Repository = gitRepository,
-                        OutputStream = new StreamWriter(new NullStream())
-                    };
                     try
                     {
-                        fetchCmd.Execute();
+                        gitRepository.Fetch("origin", credentials: GetCredentials());
+                        var branch = string.Format("origin/{0}", configuration.Branch);
+                        // NOTE: gitRepository.Checkout(branch) does not work...
+                        gitRepository.Branches[branch].Checkout(CheckoutModifiers.Force, null, null);
                     }
                     catch (Exception ex)
                     {
-                        if (ex is TransportException && ex.Message == "Nothing to fetch.")
-                            logger.Log(TraceEventType.Verbose, "Nothing to fetch.");
-                        else
-                            logger.Log(TraceEventType.Warning, "Fetch failed: {0}", ex);
+                        logger.Log(TraceEventType.Warning, "Update failed: {0}", ex);
                     }
-
-                    logger.Log(TraceEventType.Verbose, "Checkout branch {0}", configuration.Branch);
-                    var checkoutCmd = new CheckoutCommand
-                    {
-                        Quiet = true,
-                        Repository = gitRepository,
-                        Arguments = new List<string> { configuration.Branch },
-                        BranchCreate = String.Empty,
-                        OutputStream = new StreamWriter(new NullStream())
-                    };
-                    try { checkoutCmd.Execute(); }
-                    catch (Exception ex) { logger.Log(TraceEventType.Warning, "Checkout failed: {0}", ex); }
 
                     timeout = new Timeout(configuration.UpdateInterval);
                 }
-            }
-        }
-
-        public class Timeout
-        {
-            private readonly DateTime endtime;
-
-            public Timeout(TimeSpan duration)
-            {
-                endtime = DateTime.Now + duration;
-            }
-
-            public bool Elapsed
-            {
-                get { return DateTime.Now > endtime; }
             }
         }
     }

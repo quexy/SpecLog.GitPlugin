@@ -7,7 +7,7 @@
     <DockPanel Margin="10" Width="300">
         <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="Save" Command="{Binding SaveCommand}" IsDefault="True" Margin="0,0,2,0" VerticalAlignment="Center" HorizontalAlignment="Left" />
-            <Button Content="Cancel" Command="{Binding CloseCommand}" IsCancel="True" Margin="2,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Right" />
+            <Button Content="Cancel" Command="{Binding CancelCommand}" IsCancel="True" Margin="2,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Right" />
         </StackPanel>
         <Grid Margin="0,5">
             <Grid.ColumnDefinitions>
@@ -16,6 +16,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
+                <RowDefinition Height="25" />
                 <RowDefinition Height="25" />
                 <RowDefinition Height="25" />
                 <RowDefinition Height="25" />
@@ -38,6 +39,15 @@
             <TextBlock Grid.Row="4" Grid.Column="0" Text="Update Interval" VerticalAlignment="Center" />
             <TextBox Grid.Row="4" Grid.Column="2" VerticalAlignment="Center" 
                 Text="{Binding UpdateIntervalMinutes, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" />
+            <!-- authentication -->
+            <TextBlock Grid.Row="5" Grid.Column="0" VerticalAlignment="Center" Text="TFS User" />
+            <DockPanel Grid.Row="5" Grid.Column="2" VerticalAlignment="Center">
+                <Button DockPanel.Dock="Right" x:Name="specify" Content="Change" Command="{Binding ChangeUserCommand}" />
+                <Button DockPanel.Dock="Right" x:Name="clear" Content="Clear" Command="{Binding ClearUserCommand}" Visibility="{Binding ClearVisibility}" />
+                <Border Margin="2" BorderBrush="AliceBlue" BorderThickness="1">
+                    <TextBlock Text="{Binding DisplayedUser}" VerticalAlignment="Center" />
+                </Border>
+            </DockPanel>
         </Grid>
     </DockPanel>
 </UserControl>

@@ -1,9 +1,0 @@
-Git# is Copyright (C) 2007-2009 by the Git Development Community under the Modified BSD Licence
-
-JGit is Copyright (C) 2007-2012 by Eclipse Foundation, Inc. under the Eclipse Distribution Licence
-
-Miscellaneous Utility Library is Copyright (c) 2004-2008 Jon Skeet and Marc Gravell under the Modified BSD Licence
-
-Winterdom.IO.FileMap is Copyright (c) Free Software Foundation, Inc. under the GNU Lesser General Public License (v2.1)
-
-Other libraries may be Copyright (c) of their respective owners

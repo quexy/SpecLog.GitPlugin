@@ -41,7 +41,8 @@ namespace SpecLog.GitPlugin.Server
                 commandBuilderFactory,
                 boundaryFactory,
                 boundary,
-                logger
+                logger,
+                timeService
             );
         }
     }

@@ -5,6 +5,8 @@ namespace SpecLog.GitPlugin.Client
     [Serializable]
     public class GitPluginConfiguration
     {
+        public const string PasswordKey = "GitAuthPassword";
+
         public GitPluginConfiguration()
         {
             UpdateIntervalMinutes = 5;
@@ -14,7 +16,10 @@ namespace SpecLog.GitPlugin.Client
         public string RemoteRepository { get; set; }
         public string LocalRepository { get; set; }
         public string Branch { get; set; }
+
         public int UpdateIntervalMinutes { get; set; }
+
+        public string Username { get; set; }
     }
 
     public static class PluginCommands
