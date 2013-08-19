@@ -3,3 +3,4 @@ SpecLog.GitPlugin.Client/bin
 SpecLog.GitPlugin.Client/obj
 SpecLog.GitPlugin.Server/bin
 SpecLog.GitPlugin.Server/obj
+*.csproj.user

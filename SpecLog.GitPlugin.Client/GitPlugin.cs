@@ -1,4 +1,6 @@
-﻿using TechTalk.SpecLog.Application.Common.Dialogs;
+﻿using System;
+using TechTalk.SpecLog.Application.Common;
+using TechTalk.SpecLog.Application.Common.Dialogs;
 using TechTalk.SpecLog.Application.Common.PluginsInfrastructure;
 using TechTalk.SpecLog.Common;
 using TechTalk.SpecLog.Entities;
@@ -6,7 +8,7 @@ using TechTalk.SpecLog.Entities;
 namespace SpecLog.GitPlugin.Client
 {
     [Plugin(PluginName)]
-    public class GitPlugin : IClientPlugin
+    public class GitPlugin : IClientPlugin, IConfigurationSavedCallback
     {
         public const string PluginName = "SpecLog.GitPlugin";
         public const string GitGherkinFileProviderType = PluginName;
@@ -18,12 +20,13 @@ namespace SpecLog.GitPlugin.Client
 
         public string Description
         {
-            get { return "Gherkin file synchronisation provider for git repositories."; }
+            get { return "Gherkin file synchronisation provider for Git repositories."; }
         }
 
         public bool IsConfigurable(RepositoryMode repositoryMode) { return repositoryMode == RepositoryMode.ClientServer; }
         public IDialogViewModel GetConfigDialog(RepositoryMode repositoryMode, bool isEnabled, string config)
         {
+            isEnabledBeforeConfig = isEnabled;
             return new GitPluginConfigurationDialogViewModel(config, isEnabled);
         }
 
@@ -42,6 +45,21 @@ namespace SpecLog.GitPlugin.Client
             {
                 new PluginCommand { CommandVerb = PluginCommands.SynchronizeGherkinFilesVerb, DisplayText = "Synchronize Gherkin Files" }
             };
+        }
+
+        public bool IsWorkItemSynchronizer(RepositoryMode repositorMode)
+        {
+            return false;
+        }
+
+        private bool isEnabledBeforeConfig;
+        public void OnConfigurationSaved(RepositoryMode repositoryMode, PluginConfigurationDialogResult configuration, IDialogService dialogService, ICommandExecutionService commandExecutionService)
+        {
+            if (repositoryMode != RepositoryMode.ClientServer) return;
+            if (!configuration.IsEnabled) return;
+            if (isEnabledBeforeConfig) return;
+
+            dialogService.ShowDialog(new OfferResynchronizationViewModel(commandExecutionService));
         }
     }
 }

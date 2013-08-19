@@ -61,12 +61,20 @@
     </Compile>
     <Compile Include="GitPluginConfigurationDialogViewModel.cs" />
     <Compile Include="GitPluginGherkinLinkProviderViewModel.cs" />
+    <Compile Include="OfferResynchronizationView.xaml.cs">
+      <DependentUpon>OfferResynchronizationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OfferResynchronizationViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <Page Include="GitPluginConfigurationDialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="OfferResynchronizationView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

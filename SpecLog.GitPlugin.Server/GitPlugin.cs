@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using TechTalk.SpecLog.Commands;
 using TechTalk.SpecLog.Common;
 using TechTalk.SpecLog.Common.Commands;
@@ -38,19 +40,24 @@ namespace SpecLog.GitPlugin.Server
             Log(TraceEventType.Information, "The plugin '{0}' stopped successfully.", PluginName);
         }
 
-        public override void PerformCommand(string commandVerb)
+        public override IEnumerable<IPeriodicActivity> ActiveSynchronizers
         {
-            base.PerformCommand(commandVerb);
+            get { return new IPeriodicActivity[] { GitGherkinLinkProvider.GherkinFilePoller }; }
+        }
 
+        public override void PerformCommand(string commandVerb, string issuingUser)
+        {
+            Log(TraceEventType.Information, "Performing received command '{0}'...", commandVerb);
             switch (commandVerb)
             {
                 case PluginCommands.SynchronizeGherkinFilesVerb:
                     GitGherkinLinkProvider.GherkinFilePoller.TriggerUpdate();
                     break;
                 default:
-                    Log(TraceEventType.Warning, "The command '{0}' is not spported");
+                    Log(TraceEventType.Warning, "The command '{0}' is not supported", commandVerb);
                     break;
             }
+            Log(TraceEventType.Information, "Perform command '{0}' finished", commandVerb);
         }
 
         public override void BeforeApplyCommand(RepositoryInfo repository, Command command) { /* SKIP */ }
